@@ -1,1 +1,1 @@
-// hello 
+Warsztaty DAO
