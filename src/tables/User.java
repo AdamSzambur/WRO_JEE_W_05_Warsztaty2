@@ -11,7 +11,6 @@ public class User {
     private String password;
     private int groupId;
 
-
     public int getGroupId() {
         return groupId;
     }
@@ -19,7 +18,6 @@ public class User {
     public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
-
 
     public int getId() {
         return id;
@@ -53,7 +51,6 @@ public class User {
         this.userName = userName;
     }
 
-
     public User() {
     }
 
@@ -68,10 +65,9 @@ public class User {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-
     @Override
     public String toString() {
-        return  "id=" + id +
+        return "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", groupId='" + groupId + '\'';

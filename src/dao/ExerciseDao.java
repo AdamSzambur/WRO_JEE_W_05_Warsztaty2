@@ -2,9 +2,8 @@ package dao;
 
 import java.sql.*;
 import java.util.Arrays;
+
 import tables.Exercise;
-
-
 
 public class ExerciseDao {
     private static final String CREATE_QUERY =
@@ -17,9 +16,11 @@ public class ExerciseDao {
             "DELETE FROM exercise WHERE id = ?";
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM exercise";
+    private static final String FIND_ALL_NOT_SOLVED_BY_USER_ID_QUERY =
+            "SELECT * FROM exercise where id NOT IN (SELECT exercise_id as user_exercise FROM solution WHERE users_id=?)";
 
     public Exercise create(Exercise exercise) {
-        try(Connection conn = ConnectionCreator.getConnection()) {
+        try (Connection conn = ConnectionCreator.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, exercise.getTitle());
             statement.setString(2, exercise.getDescription());
@@ -97,7 +98,30 @@ public class ExerciseDao {
             }
             return exercises;
         } catch (SQLException e) {
-            e.printStackTrace(); return null;
+            e.printStackTrace();
+            return null;
         }
     }
+
+    public Exercise[] findAllNotSolvedByUserId(int userId) {
+        try (Connection conn = ConnectionCreator.getConnection()) {
+            Exercise[] exercises = new Exercise[0];
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_NOT_SOLVED_BY_USER_ID_QUERY);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Exercise exercise = new Exercise();
+                exercise.setId(resultSet.getInt("id"));
+                exercise.setTitle(resultSet.getString("title"));
+                exercise.setDescription(resultSet.getString("description"));
+                exercises = addToArray(exercise, exercises);
+            }
+            return exercises;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

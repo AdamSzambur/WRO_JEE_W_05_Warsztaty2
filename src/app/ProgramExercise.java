@@ -1,4 +1,4 @@
-package logic;
+package app;
 
 import dao.ExerciseDao;
 import tables.Exercise;
@@ -6,7 +6,7 @@ import tables.Exercise;
 import java.util.Scanner;
 
 
-public class Program2 {
+public class ProgramExercise {
     public static void main(String[] args) {
         ExerciseDao exerciseDao = new ExerciseDao();
         String option;
@@ -37,51 +37,31 @@ public class Program2 {
     }
 
     private static void deleteExercise(ExerciseDao exerciseDao) {
-        int exerciseId = 0;
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Podaj id zadania : ");
-
-        while (!sc.hasNextInt()) {
-            sc.nextLine();
-            System.err.print("Podana wartość nie jest liczbą. Jeszcze raz podaj indeks zadania : ");
-        }
-        exerciseId = sc.nextInt();
-        sc.nextLine();
-
+        int exerciseId = getIntValue("Podaj id zadania : ");
         exerciseDao.delete(exerciseId);
         System.out.println();
         printAllExercises(exerciseDao);
     }
 
     private static void editExercise(ExerciseDao exerciseDao) {
-        String title = "";
-        String description = "";
-        int exerciseId = 0;
+        String title;
+        String description;
         Scanner sc = new Scanner(System.in);
-        System.out.print("Podaj id zadania : ");
-
-        while (!sc.hasNextInt()) {
-            sc.nextLine();
-            System.err.print("Podana wartość nie jest liczbą. Jeszcze raz podaj indeks zadania : ");
-        }
-        exerciseId = sc.nextInt();
-        sc.nextLine();
+        int exerciseId = getIntValue("Podaj id zadania : ");
         System.out.print("Podaj tutuł zadania : ");
         title = sc.nextLine();
         System.out.print("Podaj opis zadania : ");
         description = sc.nextLine();
-
         Exercise exercise = new Exercise(title, description);
         exercise.setId(exerciseId);
-
         exerciseDao.update(exercise);
         System.out.println();
         printAllExercises(exerciseDao);
     }
 
     private static void addExercise(ExerciseDao exerciseDao) {
-        String title = "";
-        String description = "";
+        String title;
+        String description;
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Podaj tutuł zadania : ");
@@ -111,5 +91,15 @@ public class Program2 {
         System.out.println("edit – edycja zadania,");
         System.out.println("delete – usunięcie zadania,");
         System.out.println("quit – zakończenie programu.");
+    }
+
+    private static int getIntValue(String title) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print(title);
+        while (!sc.hasNextInt()) {
+            sc.nextLine();
+            System.err.print("Podana wartość nie jest liczbą. Jeszcze raz podaj indeks : ");
+        }
+        return sc.nextInt();
     }
 }

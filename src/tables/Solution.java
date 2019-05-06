@@ -4,6 +4,27 @@ public class Solution {
     private int id;
     private String created;
     private String updated;
+    private String description;
+    private int exercise_id;
+    private int users_id;
+    private int rating;
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     public int getId() {
         return id;
@@ -53,20 +74,17 @@ public class Solution {
         this.users_id = users_id;
     }
 
-    private String description;
-    private int exercise_id;
-    private int users_id;
 
     @Override
     public String toString() {
-        return "Solution{" +
-                "id=" + id +
+        return "id=" + id +
                 ", created='" + created + '\'' +
                 ", updated='" + updated + '\'' +
                 ", description='" + description + '\'' +
                 ", exercise_id=" + exercise_id +
                 ", users_id=" + users_id +
-                '}';
+                ", rating ='" + rating + "'" +
+                ", comment ='" + comment + "'";
     }
 
     public Solution(String created, String updated, String description, int exercise_id, int users_id) {
@@ -79,7 +97,6 @@ public class Solution {
 
     public Solution() {
     }
-
 
 
 }

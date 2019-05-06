@@ -32,10 +32,12 @@ public class UserDao {
                 user.setId(resultSet.getInt(1));
             }
             return user;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            System.err.println("Nie dodano uzytkownika do listy.");
+            ex.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     public User read(int userId) {
@@ -67,8 +69,11 @@ public class UserDao {
             statement.setInt(4, user.getGroupId());
             statement.setInt(5, user.getId());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            System.err.println("Nie podano wałściwego numeru grupy. Nie zaktualizowano uzytkownika.");
+        } catch (SQLException ex) {
+            System.err.println("Nie zaktualizowano uzytkownika.");
+            System.out.println(ex.getMessage());
         }
     }
 
