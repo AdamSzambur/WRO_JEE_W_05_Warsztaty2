@@ -1,9 +1,9 @@
-package dao;
+package pl.coderslab.dao;
 
 import java.sql.*;
 import java.util.Arrays;
 
-import tables.Exercise;
+import pl.coderslab.tables.Exercise;
 
 public class ExerciseDao {
     private static final String CREATE_QUERY =
@@ -31,7 +31,8 @@ public class ExerciseDao {
             }
             return exercise;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie utworzono zadania.");
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -49,7 +50,7 @@ public class ExerciseDao {
                 return exercise;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -63,7 +64,8 @@ public class ExerciseDao {
             statement.setInt(3, exercise.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie zaktualizowano danych zadania.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -74,7 +76,8 @@ public class ExerciseDao {
             statement.setInt(1, exerciseId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie usunięto zadania.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -98,7 +101,7 @@ public class ExerciseDao {
             }
             return exercises;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }
@@ -118,7 +121,7 @@ public class ExerciseDao {
             }
             return exercises;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }

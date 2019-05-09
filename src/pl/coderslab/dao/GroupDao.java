@@ -1,6 +1,6 @@
-package dao;
+package pl.coderslab.dao;
 
-import tables.Group;
+import pl.coderslab.tables.Group;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -30,7 +30,8 @@ public class GroupDao {
             }
             return group;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie utworzono grupy.");
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -49,7 +50,7 @@ public class GroupDao {
                 return group;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -63,7 +64,8 @@ public class GroupDao {
             statement.setInt(4, group.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie zaktualizowano grupy.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -73,7 +75,8 @@ public class GroupDao {
             statement.setInt(1, groupId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie usunięto grupy.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -98,7 +101,7 @@ public class GroupDao {
             }
             return groups;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }

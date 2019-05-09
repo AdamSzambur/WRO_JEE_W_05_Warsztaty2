@@ -1,6 +1,6 @@
-package dao;
+package pl.coderslab.dao;
 
-import tables.Solution;
+import pl.coderslab.tables.Solution;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -18,9 +18,9 @@ public class SolutionDao {
     private static final String FIND_ALL_QUERY =
             "SELECT * FROM solution";
     private static final String FIND_ALL_BY_USER_ID_QUERY =
-            "SELECT solution.*, users.username, exercise.title FROM users join solution on users.id=solution.users_id join exercise on exercise.id=solution.exercise_id AND solution.users_id=?";
+            "SELECT * FROM users join solution on users.id=solution.users_id join exercise on exercise.id=solution.exercise_id AND solution.users_id=?";
     private static final String FIND_ALL_BY_EXERCISE_ID_QUERY =
-            "SELECT solution.*, users.username, exercise.title FROM users join solution on users.id=solution.users_id join exercise on exercise.id=solution.exercise_id AND exercise.id=? ORDER BY solution.created DESC";
+            "SELECT * FROM users join solution on users.id=solution.users_id join exercise on exercise.id=solution.exercise_id AND exercise.id=? ORDER BY solution.created DESC";
 
     public Solution create(Solution solution) {
         try (Connection conn = ConnectionCreator.getConnection()) {
@@ -37,7 +37,8 @@ public class SolutionDao {
             }
             return solution;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie utworzono rozwiązania.");
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -62,7 +63,8 @@ public class SolutionDao {
             statement.setInt(8, solution.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie zaktualizowano rozwiązania.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -72,7 +74,8 @@ public class SolutionDao {
             statement.setInt(1, solutionId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie usunięto rozwiązania.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -114,7 +117,7 @@ public class SolutionDao {
             }
             return solutions;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }

@@ -1,16 +1,16 @@
-package app;
+package pl.coderslab.app;
 
-import dao.ExerciseDao;
-import dao.SolutionDao;
-import dao.UserDao;
-import tables.Exercise;
-import tables.Solution;
+import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.dao.UserDao;
+import pl.coderslab.tables.Exercise;
+import pl.coderslab.tables.Solution;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import static app.ProgramUser.printAllUsers;
+import static pl.coderslab.app.ProgramUser.printAllUsers;
 
 public class ProgramSolution {
     public static void main(String[] args) {

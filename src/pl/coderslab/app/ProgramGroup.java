@@ -1,9 +1,9 @@
-package app;
+package pl.coderslab.app;
 
-import dao.GroupDao;
-import dao.UserDao;
-import tables.Group;
-import tables.User;
+import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.UserDao;
+import pl.coderslab.tables.Group;
+import pl.coderslab.tables.User;
 
 import java.util.Scanner;
 

@@ -1,7 +1,7 @@
-package app;
+package pl.coderslab.app;
 
-import dao.ExerciseDao;
-import tables.Exercise;
+import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.tables.Exercise;
 
 import java.util.Scanner;
 

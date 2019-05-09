@@ -1,4 +1,4 @@
-package tables;
+package pl.coderslab.tables;
 
 public class Exercise {
 

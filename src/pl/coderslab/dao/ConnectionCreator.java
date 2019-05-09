@@ -1,4 +1,4 @@
-package dao;
+package pl.coderslab.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,11 +11,6 @@ public class ConnectionCreator {
     private static final String PASS = "coderslab";
 
     public static Connection getConnection() throws SQLException {
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
         return DriverManager.getConnection(URL, USER,PASS);
     }
 

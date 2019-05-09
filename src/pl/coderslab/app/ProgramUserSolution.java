@@ -1,12 +1,12 @@
-package app;
+package pl.coderslab.app;
 
-import dao.ExerciseDao;
-import dao.GroupDao;
-import dao.SolutionDao;
-import dao.UserDao;
-import tables.Exercise;
-import tables.Solution;
-import tables.User;
+import pl.coderslab.dao.ExerciseDao;
+import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.SolutionDao;
+import pl.coderslab.dao.UserDao;
+import pl.coderslab.tables.Exercise;
+import pl.coderslab.tables.Solution;
+import pl.coderslab.tables.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

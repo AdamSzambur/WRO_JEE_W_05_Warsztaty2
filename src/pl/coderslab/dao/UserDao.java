@@ -1,6 +1,6 @@
-package dao;
+package pl.coderslab.dao;
 
-import tables.User;
+import pl.coderslab.tables.User;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -33,9 +33,8 @@ public class UserDao {
             }
             return user;
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
             System.err.println("Nie dodano uzytkownika do listy.");
-            ex.printStackTrace();
+            System.err.println(ex.getMessage());
             return null;
         }
     }
@@ -55,7 +54,7 @@ public class UserDao {
                 return user;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         return null;
     }
@@ -73,7 +72,7 @@ public class UserDao {
             System.err.println("Nie podano wałściwego numeru grupy. Nie zaktualizowano uzytkownika.");
         } catch (SQLException ex) {
             System.err.println("Nie zaktualizowano uzytkownika.");
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 
@@ -84,7 +83,8 @@ public class UserDao {
             statement.setInt(1, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie usunieto uzytkownika.");
+            System.err.println(e.getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ public class UserDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }
@@ -133,7 +133,8 @@ public class UserDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Nie usunieto uzytkownika.");
+            System.err.println(e.getMessage());
             return null;
         }
     }

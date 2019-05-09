@@ -1,9 +1,9 @@
-package app;
+package pl.coderslab.app;
 
-import dao.GroupDao;
-import dao.UserDao;
-import tables.Group;
-import tables.User;
+import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.UserDao;
+import pl.coderslab.tables.Group;
+import pl.coderslab.tables.User;
 
 import java.io.Console;
 import java.util.Scanner;
@@ -67,7 +67,6 @@ public class ProgramUser {
         userName = sc.nextLine();
         System.out.print("Podaj adres email : ");
         email = sc.nextLine();
-        System.out.print("Podaj hasło : ");
         password = getPassword();
         System.out.println();
         printAllGroups();
@@ -116,9 +115,6 @@ public class ProgramUser {
             } else {
                 password = String.valueOf(console.readPassword("Podaj hasło : "));
                 password2 = String.valueOf(console.readPassword("Podaj jeszcze raz hasło : "));
-                if (password != password2) {
-                    System.err.println("Podane hasła nie są takie same.");
-                }
             }
 
             if (!password.equals(password2)) {
