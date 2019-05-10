@@ -1,9 +1,6 @@
 package pl.coderslab.app;
 
-import pl.coderslab.dao.ExerciseDao;
-import pl.coderslab.dao.GroupDao;
-import pl.coderslab.dao.SolutionDao;
-import pl.coderslab.dao.UserDao;
+import pl.coderslab.dao.*;
 import pl.coderslab.tables.Exercise;
 import pl.coderslab.tables.Solution;
 import pl.coderslab.tables.User;
@@ -149,16 +146,17 @@ public class ProgramUserSolution {
 
     private static void printOptions(User user) {
         GroupDao groupDao = new GroupDao();
+        GroupPrivilegesDao groupPrivilegesDao = new GroupPrivilegesDao();
 
         System.out.println("Wybierz jedną z opcji:");
         // "dostep" tylko dla uzytkownikow dla ktorych grupa ma solution_access =1
-        if (groupDao.read(user.getGroupId()).getSolutionAccess() == 1) {
+        if (groupPrivilegesDao.read(user.getGroupId()).getSolution() == 1) {
             System.out.println("add – dodawanie rozwiązania");
             System.out.println("view – przeglądanie swoich rozwiązań.");
             System.out.println("udate – aktualizacja rozwiązań.");
         }
         // "dostep" tylko dla uzytkowników dla ktorych grupa ma rating_access = 1
-        if (groupDao.read(user.getGroupId()).getRatingAccess() == 1) {
+        if (groupPrivilegesDao.read(user.getGroupId()).getRating() == 1) {
             System.out.println("view_all – przeglądanie wszystkich rozwiązań.");
             System.out.println("rating_comment– ocena i komentarz do rozwiązania.");
         }

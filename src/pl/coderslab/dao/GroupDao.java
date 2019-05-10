@@ -3,15 +3,17 @@ package pl.coderslab.dao;
 import pl.coderslab.tables.Group;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class GroupDao {
     private static final String CREATE_QUERY =
-            "INSERT INTO user_group(name,rating_access, solution_access) VALUES (?,?,?)";
+            "INSERT INTO user_group(name) VALUES (?)";
     private static final String READ_QUERY =
             "SELECT * FROM user_group where id = ?";
     private static final String UPDATE_QUERY =
-            "UPDATE user_group SET name = ?, rating_access = ?, solution_access = ?  where id = ?";
+            "UPDATE user_group SET name = ? where id = ?";
     private static final String DELETE_QUERY =
             "DELETE FROM user_group WHERE id = ?";
     private static final String FIND_ALL_QUERY =
@@ -21,8 +23,6 @@ public class GroupDao {
         try (Connection conn = ConnectionCreator.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(CREATE_QUERY, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, group.getName());
-            statement.setInt(2, group.getRatingAccess());
-            statement.setInt(3, group.getSolutionAccess());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -45,8 +45,6 @@ public class GroupDao {
                 Group group = new Group();
                 group.setId(resultSet.getInt("id"));
                 group.setName(resultSet.getString("name"));
-                group.setRatingAccess(resultSet.getInt("rating_access"));
-                group.setSolutionAccess(resultSet.getInt("solution_access"));
                 return group;
             }
         } catch (SQLException e) {
@@ -59,9 +57,7 @@ public class GroupDao {
         try (Connection conn = ConnectionCreator.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY);
             statement.setString(1, group.getName());
-            statement.setInt(2, group.getRatingAccess());
-            statement.setInt(3, group.getSolutionAccess());
-            statement.setInt(4, group.getId());
+            statement.setInt(2, group.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Nie zaktualizowano grupy.");
@@ -80,26 +76,18 @@ public class GroupDao {
         }
     }
 
-    private Group[] addToArray(Group u, Group[] groups) {
-        Group[] tmpGroup = Arrays.copyOf(groups, groups.length + 1);
-        tmpGroup[groups.length] = u;
-        return tmpGroup;
-    }
-
     public Group[] findAll() {
         try (Connection conn = ConnectionCreator.getConnection()) {
-            Group[] groups = new Group[0];
+            List<Group> groups = new ArrayList<>();
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_QUERY);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Group group = new Group();
                 group.setId(resultSet.getInt("id"));
                 group.setName(resultSet.getString("name"));
-                group.setSolutionAccess(resultSet.getInt("solution_access"));
-                group.setRatingAccess(resultSet.getInt("rating_access"));
-                groups = addToArray(group, groups);
+                groups.add(group);
             }
-            return groups;
+            return groups.toArray(new Group[0]);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;

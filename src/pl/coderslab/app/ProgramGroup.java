@@ -1,8 +1,10 @@
 package pl.coderslab.app;
 
 import pl.coderslab.dao.GroupDao;
+import pl.coderslab.dao.GroupPrivilegesDao;
 import pl.coderslab.dao.UserDao;
 import pl.coderslab.tables.Group;
+import pl.coderslab.tables.GroupPrivileges;
 import pl.coderslab.tables.User;
 
 import java.util.Scanner;
@@ -67,9 +69,14 @@ public class ProgramGroup {
         name = sc.nextLine();
         int ratingAccess = getIntValue("Podaj dostep do wystawiania ocen [0/1] : ");
         int solutionAccess = getIntValue("Podaj dostep do dodawania i edycji rozwiązań [0/1] : ");
-        Group group = new Group(name, ratingAccess,solutionAccess);
+        Group group = new Group(name);
         group.setId(groupId);
         groupDao.update(group);
+
+        GroupPrivilegesDao groupPrivilegesDao = new GroupPrivilegesDao();
+        GroupPrivileges groupPrivileges = new GroupPrivileges(groupId,solutionAccess,ratingAccess);
+        groupPrivileges.setId(groupPrivilegesDao.findByIdGroup(groupId).getId());
+        groupPrivilegesDao.update(groupPrivileges);
         System.out.println();
         printAllGroups(groupDao);
     }
@@ -81,18 +88,21 @@ public class ProgramGroup {
         name = sc.nextLine();
         int ratingAccess = getIntValue("Podaj dostep do wystawiania ocen [0/1] : ");
         int solutionAccess = getIntValue("Podaj dostep do dodawania i edycji rozwiązań [0/1] : ");
-        Group group = new Group(name,ratingAccess,solutionAccess);
+        Group group = new Group(name);
 
         if (groupDao.create(group) != null) {
             System.out.println("Dodano nową grupę do listy.\n");
+            GroupPrivileges groupPrivileges = new GroupPrivileges(group.getId(),solutionAccess,ratingAccess);
+            new GroupPrivilegesDao().create(groupPrivileges);
         }
         printAllGroups(groupDao);
     }
 
     private static void printAllGroups(GroupDao groupDao) {
+        GroupPrivilegesDao groupPrivilegesDao = new GroupPrivilegesDao();
         System.out.println("Tablica Grup :");
         for (Group group : groupDao.findAll()) {
-            System.out.println(group);
+                System.out.println(group +" "+ groupPrivilegesDao.findByIdGroup(group.getId()).toString());
         }
         System.out.println();
     }
